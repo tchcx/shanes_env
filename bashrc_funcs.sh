@@ -1,9 +1,5 @@
-# Optimize PDFs with ghostscript
-#  Credit to Ahmed Musallam; I only added some enhancements
-#  github.com/ahmed-musallam
-# Usage is:
-# optimize_pdf ./some.pdf --> ./some.pdf
-# optimize_pdf ./some.pdf dir/ --> dir/some.pdf
+## Optimizes PDFs aggressively.
+## Primarily as feedstock to LLMs, or for archiving.
 
 optimize_pdf() {
   if [[ -e "$1" ]]; then
@@ -20,20 +16,40 @@ optimize_pdf() {
  else
    optimized_destination="$2/$unoptimized_pdf"
  fi
+  echo "$optimized_destination"
 
 gs \
  -q -dNOPAUSE -dBATCH -dSAFER \
  -sDEVICE=pdfwrite \
+ -dPDFSETTINGS=/ebook \
+ -dFastWebView \
  -dCompatibilityLevel=1.4 \
- -dPDFSETTINGS=/screen \
+ -dPDFSETTINGS=/ebook \
  -dNOTRANSPARENCY \
+ -dHaveTransparency=false \
+ -dTransferFunctionInfo=/Apply \
+ -dPreserveHalftoneInfo=false \
+ -dPreserveMarkedContent=false \
+ -dUCRandBGInfo=/Remove \
+ -dPreserveOverprintSettings=false \
  -dDetectDuplicateImages=true \
- -dEmbedAllFonts=true -dSubsetFonts=true \
+ -dCompressFonts=true -dEmbedAllFonts=true -dSubsetFonts=true \
+ -sProcessColorModel=DeviceGray \
+ -sColorConversionStrategy=Gray \
+ -dColorImageDownsampleThreshold=0.5 \
+ -dGrayImageDownsampleThreshold=0.5 \
+ -dMonoImageDownsampleThreshold=0.5 \
+ -dDownsampleColorImages=true \
+ -dColorImageFilter=/DCTEncode \
  -dColorImageDownsampleType=/Bicubic \
- -dColorImageResolution=144 \
- -dGrayImageResolution=144 \
+ -dColorImageResolution=96 \
+ -dDownsampleGrayImages=true \
+ -dGrayImageFilter=/DCTEncode \
+ -dGrayImageDownsampleType=/Bicubic \
+ -dGrayImageResolution=96 \
+ -dDownsampleMonoImages=true \
  -dMonoImageDownsampleType=/Bicubic \
- -dMonoImageResolution=144 \
+ -dMonoImageResolution=96 \
  -sOutputFile="$optimized_destination" \
-  "$unoptimized_pdf"                         
+  "$unoptimized_pdf"      
 }
