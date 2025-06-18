@@ -88,3 +88,39 @@ optimize_pdf() {
     return 1
   fi
 }
+
+# Make and enter directory
+mcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# short-hand for archives
+extract () {
+   if [ -f "$1" ] ; then
+       case "$1" in
+           *.tar.bz2)   tar xvjf "$1"    ;;
+           *.tar.gz)    tar xvzf "$1"    ;;
+           *.tar.xz)    tar xvJf "$1"    ;;
+           *.tar)       tar xvf "$1"     ;;
+           *.tgz)       tar xvzf "$1"    ;;
+           *.zip)       unzip "$1"       ;;
+           *.rar)       unrar x "$1"     ;;
+           *.bz2)       bunzip2 "$1"     ;;
+           *.gz)        gunzip "$1"      ;;
+           *.xz)        unxz "$1"        ;;
+           *.7z)        7z x "$1"        ;;
+           *.Z)         uncompress "$1"  ;;
+           *)           echo "'$1' cannot be extracted via extract()" ;;
+       esac
+   else
+       echo "'$1' is not a valid file"
+   fi
+}
+
+# Get public IP
+alias public_ip="curl icanhazip.com"
+
+# Get private IP
+alias private_ip="ip a | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v '127.0.0.1' | head -n 1"
+
+
