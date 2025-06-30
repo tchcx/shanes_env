@@ -61,14 +61,14 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll "true"
 
 
 # Update
-sudo dnf update
+sudo dnf -y update
 
 # This is a KVM/QEMU guest in UTM on MacOS host
 sudo dnf -y install spice-vdagent qemu-guest-agent qemu-kvm-device-display-virtio-gpu qemu-kvm-device-display-virtio-gpu-pci cifs-utils
 
 # Expanded package access
 crb enable
-dnf install epel-release
+dnf -y install epel-release
 sudo dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-"$(rpm -E %rhel)".noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-"$(rpm -E %rhel)".noarch.rpm
 
 # Basic stuff
