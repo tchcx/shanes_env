@@ -64,21 +64,21 @@ gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll "true"
 sudo dnf update
 
 # This is a KVM/QEMU guest in UTM on MacOS host
-sudo dnf install spice-vdagent qemu-guest-agent qemu-kvm-device-display-virtio-gpu qemu-kvm-device-display-virtio-gpu-pci cifs-utils
+sudo dnf -y install spice-vdagent qemu-guest-agent qemu-kvm-device-display-virtio-gpu qemu-kvm-device-display-virtio-gpu-pci cifs-utils
 
 # Expanded package access
 crb enable
 dnf install epel-release
-sudo dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-"$(rpm -E %rhel)".noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-"$(rpm -E %rhel)".noarch.rpm
+sudo dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-"$(rpm -E %rhel)".noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-"$(rpm -E %rhel)".noarch.rpm
 
 # Basic stuff
-sudo dnf install python3 python3-pip git curl wget policycoreutils-python-utils python3-virtualenv unzip
+sudo dnf -y install python3 python3-pip git curl wget policycoreutils-python-utils python3-virtualenv unzip
 
 # Media work
-dnf install ffmpeg ghostscript imagemagick perl-Image-ExifTool
+dnf install -y ffmpeg ghostscript imagemagick perl-Image-ExifTool
 
 # Network utilities
-dnf install nmap tcpdump mtr wireshark
+dnf install -y nmap tcpdump mtr wireshark
 
 
 ####
@@ -87,7 +87,7 @@ dnf install nmap tcpdump mtr wireshark
 
 
 # Flatpaks I'll use a lot
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add -y --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 sudo flatpak update
 flatpak install com.vscodium.codium org.mozilla.firefox org.chromium.Chromium org.videolan.VLC com.github.hluk.copyq -y
 
